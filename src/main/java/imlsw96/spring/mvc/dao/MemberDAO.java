@@ -12,4 +12,6 @@ public interface MemberDAO {
 
 
     int selectOneUserid(String uid);
+
+    int selectLogin(MemberVO mvo);
 }
