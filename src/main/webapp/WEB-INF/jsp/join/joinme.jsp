@@ -1,4 +1,7 @@
 <%@ page pageEncoding="utf-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<script src="https://www.google.com/recaptcha/api.js"></script>
 <div id="main margin30">
     <div class="margin30">
         <h3><i class="bi bi-people-fill"></i> 회원가입</h3>
@@ -42,9 +45,9 @@
                     </div><!--주민번호-->
 
                     <div class="form-group row">
-                        <label class="col-2 col-form-label text-danger text-right" for="newid">아이디</label>
-                        <input type="text" class="form-control col-2 border-danger" id="newid" name="userid" >
-                        <span class="col-form-label text-danger">&nbsp;&nbsp;7~16자의 영문 소문자, 숫자와 특수기호(_)만 사용할 수 있습니다.</span>
+                        <label class="col-2 col-form-label text-danger text-right" for="newuid">아이디</label>
+                        <input type="text" class="form-control col-2 border-danger" id="newuid" name="userid" value="${mvo.userid}">
+                        <span id="uidmsg" class="col-form-label text-danger">&nbsp;&nbsp;7~16자의 영문 소문자, 숫자와 특수기호(_)만 사용할 수 있습니다.</span>
                     </div><!--아이디-->
 
                     <div class="form-group row">
@@ -55,23 +58,24 @@
 
                     <div class="form-group row">
                         <label class="col-2 col-form-label text-danger text-right" for="repwd">비밀번호확인</label>
-                        <input type="password" class="form-control col-2 border-danger" id="repwd" name="passwd" >
+                        <input type="password" class="form-control col-2 border-danger" id="repwd" name="repwd" >
                         <span class="col-form-label text-danger">&nbsp;&nbsp;이전 항목에서 입력했던 비밀번호를 한번 더 입력하세요.</span>
                     </div><!--비밀번호확인-->
 
                     <div class="form-group row">
                         <label class="col-2 col-form-label text-danger text-right" for="zip1">우편번호</label>
-                        <input type="text" class="form-control col-1 border-danger" id="zip1" name="passwd" readonly>
+                        <input type="text" class="form-control col-1 border-danger" id="zip1" name="zip1" readonly value="${fn:split(mvo.zipcode,'-')[0]}">
                         <label class="col-form-label">&nbsp;&ndash;&nbsp;</label>
-                        <input type="text" class="form-control col-1 border-danger" id="zip2" name="passwd" readonly>
+                        <input type="text" class="form-control col-1 border-danger" id="zip2" name="zip2" readonly value="${fn:split(mvo.zipcode,'-')[1]}">
                         <span>
-                            &nbsp;&nbsp;<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#zipcode"><i class="bi bi-question-circle">우편번호 찾기</i></button>
+                            &nbsp;&nbsp;<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#zipmodal">
+                            <i class="bi bi-question-circle">우편번호 찾기</i></button>
                         </span>
                     </div><!--우편번호-->
 
                     <div class="form-group row">
                         <label class=" col-form-label  col-2 text-danger text-right" for="addr1">주소</label>
-                        <input type="text" class="form-control col-3 border-danger" id="addr1" name="addr1" readonly>
+                        <input type="text" class="form-control col-3 border-danger" id="addr1" name="addr1" readonly value="${mvo.addr1}">
                         <label class="col-form-label">&nbsp;&ndash;&nbsp;</label>
                         <input type="text" class="form-control col-3 border-danger" id="addr2" name="addr2" >
                     </div><!--주소-->
@@ -79,11 +83,11 @@
                     <div class="form-group row">
                         <label class=" col-form-label  col-2 text-danger text-right" for="email1">이메일</label>
 
-                        <input type="text" class="form-control col-2 border-danger igborder" id="email1" name="email1" >
+                        <input type="text" class="form-control col-2 border-danger igborder" id="email1" name="email1" value="${fn:split(mvo.email,'@')[0]}">
                         <div class="input-group-append">
                             <span class="input-group-text igborder ">@</span>
                         </div>
-                        <input type="text" class="form-control col-2 border-danger igborder" id="email2" name="email2"  readonly>&nbsp;&nbsp;
+                        <input type="text" class="form-control col-2 border-danger igborder" id="email2" name="email2"  readonly value="${fn:split(mvo.email,'@')[1]}">&nbsp;&nbsp;
 
                         <select id="email3" class="form-control col-2 border-danger">
                             <option>선택하세요</option>
@@ -91,6 +95,7 @@
                             <option>daum.net</option>
                             <option>gmail.com</option>
                             <option>hotmail.com</option>
+                            <option>직접입력하기</option>
                         </select>
                     </div><!--이메일-->
 
@@ -105,15 +110,17 @@
                         </select>
 
                         <label class="col-form-label">&nbsp;&ndash;&nbsp;</label>
-                        <input type="text" class="form-control col-1 border-danger" id="hp2" name="hp2" >
+                        <input type="text" class="form-control col-1 border-danger" id="hp2" name="hp2" value="${fn:split(mvo.phone,'-')[1]}">
 
                         <label class="col-form-label">&nbsp;&ndash;&nbsp;</label>
-                        <input type="text" class="form-control col-1 border-danger" id="hp3" name="hp3" >
+                        <input type="text" class="form-control col-1 border-danger" id="hp3" name="hp3" value="${fn:split(mvo.phone,'-')[2]}">
                     </div><!--전화번호-->
 
                     <div class="form-group row">
                         <label class=" col-form-label  col-2 text-danger text-right" >자동가입방지</label>
-                        <img src="/img/google_recaptcha.gif" width="35%" height="35%" >
+                        <div class="g-recaptcha" data-sitekey="6LfE1joaAAAAAOXu6tXDltDl0o7cTFICeotZwcWO"></div>
+                        <input type="hidden" name="g-recaptcha" id="g-recaptcha">
+                        <span style="color:#ff0000">${checkCaptcha}</span>
                     </div><!--자동가입방지-->
 
 
@@ -136,3 +143,61 @@
     </div><!-- 카드정보입력-->
 
 </div><!-- main -->
+
+<!-- 우편번호 찾기 모달-->
+<div class="modal fade" id="zipmodal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">우편번호 찾기</h3>
+                <button type="button" id="modalx"
+                        class="close">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <form id="zipfrm">
+                    <div class="form-group row margin25">
+                        <div class="col-1"></div>
+                        <label for="dong"
+                               class="col-form-label col-4 text-right text-danger ">
+                            검색하실 주소의<br>동 이름을 입력하세요
+                        </label>
+                        <input type="text" id="dong" name="dong"
+                               class="form-control col-3 border-danger">
+                        <span class="col-3">
+                            <button type="button" id="findbtn"
+                                    class="btn btn-primary"><i class="bi bi-search"></i>검색하기</button>
+                        </span>
+                        <div class="col-1"></div>
+                    </div>
+                    <hr>
+                    <div class="form-group row justify-content-center">
+                        <span class="text-center text-primary">지역의 읍/면/동의 이름을 공백없이 입력하신 후 [검색하기]버튼을 클릭하세요</span>
+                        <select id="addrlist" name="addrlist"
+                                class="form-control text-left col-8 margin25" size="10">
+                            <option>123-456 서울 종로구 창신동</option>
+                            <option>123-456 서울 종로구 창신동</option>
+                            <option>123-456 서울 종로구 창신동</option>
+                            <option>123-456 서울 종로구 창신동</option>
+                            <option>123-456 서울 종로구 창신동</option>
+                            <option>123-456 서울 종로구 창신동</option>
+                            <option>123-456 서울 종로구 창신동</option>
+                            <option>123-456 서울 종로구 창신동</option>
+                            <option>123-456 서울 종로구 창신동</option>
+                            <option>123-456 서울 종로구 창신동</option>
+                            <option>123-456 서울 종로구 창신동</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer justify-content-end">
+                <button type="button"
+                        class="btn btn-danger" id="sendbtn">
+                    <i class="bi bi-check2-circle"></i>&nbsp;&nbsp;선택하고 닫기</button>
+            </div>
+
+        </div>
+    </div>
+
+</div>

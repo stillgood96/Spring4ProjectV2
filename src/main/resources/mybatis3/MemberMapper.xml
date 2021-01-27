@@ -6,6 +6,18 @@
     <insert id="insertMember" statementType="PREPARED"
         parameterType="imlsw96.spring.mvc.vo.MemberVO">
         insert  into Member(name,jumin,userid,passwd,zipcode,addr1,addr2,email,phone)
-        values (#{name},#{jumin},#{userid},#{passwd},#{zipcode},#{addr1},#{addr2},#{email},#{phone});
+        values (#{name},#{jumin},#{userid},#{passwd},#{zipcode},#{addr1},#{addr2},#{email},#{phone})
     </insert>
+
+    <!-- 주소 -->
+    <select id="zipcode" statementType="PREPARED" parameterType="String"
+            resultType="imlsw96.spring.mvc.vo.ZipcodeVO">
+             select * from zipcode_2013  where dong like #{mydong}
+    </select>
+
+    <!-- 아이디 중복조회 -->
+    <select id="checkuid" statementType="PREPARED" parameterType="String"
+            resultType="int">
+            select count(userid) cnt from Member where userid = #{uid}
+    </select>
 </mapper>

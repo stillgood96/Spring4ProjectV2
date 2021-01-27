@@ -29,6 +29,10 @@
         <hr class="border-light" >
         <p>회원가입 이후 아이디와 비밀번호로 일반회원으로 로그인하셔서 추가 인적사항등을 등록해주시기 바랍니다.
             Loren Ipsom과 함께 즐거운 시간 되십시오</p>
+        <p>이름 : ${name}</p>
+        <p>이메일 : ${email}</p>
+        <p>가입일 : ${regdate}</p>
+
     </div>
 
     <div class="text-center">
