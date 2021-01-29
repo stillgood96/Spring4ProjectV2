@@ -6,7 +6,7 @@
             <hr>
         </div>
 
-        <form class="margin1050">
+        <form class="margin1050" id="newbdfrm">
             <div class="row mb-2">
                 <div class="col-6">
                     <h4><i class="bi bi-plus-circle-fill bidragup"></i>새글 쓰기 </h4>
@@ -37,8 +37,8 @@
 
             <div class="row">
                <div class="col-12 text-center">
-                   <button type="button" class="btn btn-primary id=newbdbtn"><i class="bi bi-check">입력완료</i></button>
-                   <button type="button" class="btn btn-danger id=cancelbdbtn"><i class="bi bi-x">취소하기</i></button>
+                   <button type="button" class="btn btn-primary" id="newbdbtn"><i class="bi bi-check">입력완료</i></button>
+                   <button type="button" class="btn btn-danger" id="cancelbdbtn"><i class="bi bi-x">취소하기</i></button>
                </div>
            </div><!-- 하단 버튼 -->
         </form>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+    <insert id="insertBoard" statementType="PREPARED"
+        parameterType="imlsw96.spring.mvc.vo.BoardVO">
+            insert into Board (title, userid,contents) values(#{title},#{userid},#{contents});
+    </insert>
+
+    <select id="selectList" statementType="PREPARED" parameterType="int"
+            resultType="imlsw96.spring.mvc.vo.BoardVO">
+        select bno,title,userid,regdate,thumbs,views from Board
+        order by bno desc
+        limit #{startnum}, 10;
+
+    </select>
+
+    <select id="selectOne" statementType="PREPARED" resultType="imlsw96.spring.mvc.vo.BoardVO"
+    parameterType="String">
+        select * from Board where bno =#{bno};
+    </select>
+
+    <update id="updateBoard" statementType="PREPARED" parameterType="imlsw96.spring.mvc.vo.BoardVO">
+        update Board
+        set title  =#{title},contents=#{contetns},regdate=current_timestamp()
+        where bno =#{bno}
+    </update>
+
+    <delete id="deleteBoard" statementType="PREPARED"
+    parameterType="String">
+        delete from Board where bno=#{bno}
+    </delete>
+
+    <select id="countBoard" statementType="PREPARED" resultType="int">
+        select count(bno) cnt from Board
+    </select>
+
+</mapper>

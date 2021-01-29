@@ -1,4 +1,6 @@
 <%@ page pageEncoding="utf-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 
     <div id="main">
@@ -20,15 +22,11 @@
             </div><!--버튼들 -->
             <div class="row margin1050">
                 <table class="table">
-                    <tr class="tblines2 tbbg1 "><th colspan="2" class="text-center "><h2>어빙 정말 대단하네요 미르쓰띠~~</h2></th></tr> <!-- 제목 -->
-                    <tr class="tbbg2 font-weight-bold"><td>imlsw96</td><td class="text-right">2021.01.25 11.18 / 45 / 256</td></tr> <!-- 작성자, 작성일, 조회수 -->
+                    <tr class="tblines2 tbbg1 "><th colspan="2" class="text-center "><h2>${bd.title}</h2></th></tr> <!-- 제목 -->
+                    <tr class="tbbg2 font-weight-bold"><td>${bd.userid}</td><td class="text-right">${bd.regdate} / ${bd.thumbs} / ${bd.views}</td></tr> <!-- 작성자, 작성일, 조회수 -->
                     <tr class="tbbg3 tblines2"><td colspan="2">
-
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vitae odio nulla. Praesent lacus dolor, <br>lobortis vel nisl nec, volutpat dapibus odio. Duis auctor, sem in fringilla ullamcorper, <br>elit libero pellentesque elit, sit amet tincidunt sem quam id purus. Integer interdum erat nisl,<br> ut finibus odio malesuada nec. Class aptent taciti sociosqu ad litora torquent per conubia nostra, <br>per inceptos himenaeos. Proin maximus nunc eu est semper rutrum at eleifend magna. Mauris fringilla iaculis laoreet. Curabitur pharetra, <br>odio tempus aliquam varius, eros eros ultricies arcu, ac tincidunt urna arcu ut elit. In varius, <br>dui a consequat pulvinar, nunc sapien placerat urna, ac consequat erat risus vitae purus. In mollis urna sit amet quam rhoncus pharetra.
-
-                        Donec condimentum sed mi nec ultrices. Nullam porttitor lacinia nibh et tristique. Fusce at lacus elit. Maecenas et urna egestas, varius metus ac, pretium ante. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris at condimentum sapien, sed sagittis dui. Vestibulum ac lectus id lectus lobortis egestas. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam egestas et est a sodales. Maecenas mattis elit mollis, pellentesque massa id, vestibulum est. Fusce laoreet porttitor odio, vel bibendum lorem vulputate sed. Nulla facilisi.
-
-                        Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse tristique purus ut sem egestas tristique. Integer viverra ligula sapien, eget dignissim eros rutrum at. In condimentum lacus turpis, nec suscipit nisl commodo et. Integer egestas nec dui vitae malesuada. Suspendisse potenti. Praesent molestie risus id ornare consectetur. Ut eu justo efficitur, euismod neque sed, rhoncus orci. Ut quam mi, bibendum tempor euismod a, posuere et lacus. Cras ultricies, ex nec laoreet viverra, dui mi tempor nulla, eget tristique lacus sapien ut eros.</td></tr> <!-- 본문 -->
+                        ${bd.contents}
+                    </td>
                 </table>
             </div><!--본문글 -->
 
