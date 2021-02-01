@@ -23,7 +23,7 @@
 
     <update id="updateBoard" statementType="PREPARED" parameterType="imlsw96.spring.mvc.vo.BoardVO">
         update Board
-        set title  =#{title},contents=#{contetns},regdate=current_timestamp()
+        set title  =#{title},contents=#{contents},regdate=current_timestamp()
         where bno =#{bno}
     </update>
 
@@ -35,5 +35,9 @@
     <select id="countBoard" statementType="PREPARED" resultType="int">
         select count(bno) cnt from Board
     </select>
+
+    <update id="viewCount" statementType="PREPARED" parameterType="String">
+        update Board set views= views+1 where bno = #{bno};
+    </update>
 
 </mapper>
