@@ -8,6 +8,11 @@ $('#newbd').on('click',function(){
 $('#newbd').on('click',function(){ //새글쓰기
     location.href="/board/write";
 });
+$('#bdfindbtn').on('click',function(){
+    let param = '?findtype=' + $('#findtype').val();
+    param += '&findkey=' + $('#findkey').val();
+    location.href='/board/find/' + param + '&cp=1';
+});
 
 $('#before').on('click',function(){});
 $('#next').on('click',function(){});
@@ -39,6 +44,15 @@ $('#listbdbtn').on('click',function(){ // 목록으로
 });
 $('#thumbbtn').on('click',function(){});
 
+$('#bdcmtbtn').on('click',function(){
+    if($('#reply').val()=='') alert('댓글을 작성하세요!!');
+    else {
+        $('#replyfrm').attr('method','post');
+        $('#replyfrm').attr('action','/board/replyok');
+        $('#uid').val('리플작성');
+        $('#replyfrm').submit();
+  }
+});
 
 // 새글 쓰기 write
 $('#newbdbtn').on('click',function() {
@@ -60,4 +74,7 @@ $('#upbdokbtn').on('click',function(){
         $('#upbdfrm').submit();
     }
 });
+
+
+
 

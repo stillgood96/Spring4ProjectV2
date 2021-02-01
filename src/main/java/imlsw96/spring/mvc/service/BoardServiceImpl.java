@@ -5,7 +5,9 @@ import imlsw96.spring.mvc.vo.BoardVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service("bsrv")
 public class BoardServiceImpl implements BoardService{
@@ -70,5 +72,26 @@ public class BoardServiceImpl implements BoardService{
         if(cnt>0) isOk= true;
 
         return isOk;
+    }
+
+    @Override
+    public List<BoardVO> readBoard(String cp, String findtype, String findkey) {
+        Map<String, Object> param = new HashMap<>();
+
+        int snum = (Integer.parseInt(cp)-1) * 10;
+        param.put("snum",snum);
+        param.put("findtype",findtype);
+        param.put("findkey",findkey);
+        return bdao.findSelectList(param);
+    }
+
+    @Override
+    public int countBoard(String findtype, String findkey) {
+        Map<String, String> param = new HashMap<>();
+
+        param.put("findtype",findtype);
+        param.put("findkey", findkey);
+
+        return bdao.selectCountBoard(param);
     }
 }

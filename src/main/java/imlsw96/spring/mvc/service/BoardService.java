@@ -1,6 +1,7 @@
 package imlsw96.spring.mvc.service;
 
 import imlsw96.spring.mvc.vo.BoardVO;
+import imlsw96.spring.mvc.vo.ReplyVO;
 
 import java.util.List;
 
@@ -14,4 +15,8 @@ public interface BoardService {
     int countBoard();
 
     boolean viewCountBoard(String bno);
+
+    // 검색기능을 위함.
+    List<BoardVO>readBoard(String cp, String findtype, String findkey);
+    int countBoard(String findtype, String findkey);
 }

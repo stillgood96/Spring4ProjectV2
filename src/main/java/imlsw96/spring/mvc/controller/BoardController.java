@@ -4,6 +4,7 @@ import imlsw96.spring.mvc.service.BoardReplyService;
 import imlsw96.spring.mvc.service.BoardService;
 import imlsw96.spring.mvc.util.GoogleCaptchaUtil;
 import imlsw96.spring.mvc.vo.BoardVO;
+import imlsw96.spring.mvc.vo.ReplyVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,10 +22,10 @@ public class BoardController {
     private BoardReplyService brsrv;
 
     @Autowired
-    public BoardController(BoardService bsrv, GoogleCaptchaUtil gcutil) {
+    public BoardController(BoardService bsrv, GoogleCaptchaUtil gcutil, BoardReplyService brsrv) {
         this.bsrv = bsrv;
         this.gcutil = gcutil;
-        //this.brsrv = brsrv; 나중에 만들예정 BoardReplyService
+        this.brsrv = brsrv; //나중에 만들예정 BoardReplyService
     }
 
     // 게시판 목록 처리1 : 페이징
@@ -62,7 +63,10 @@ public class BoardController {
     public ModelAndView view(String bno, ModelAndView mv) {
         mv.setViewName("board/view.tiles");
 
+        mv.addObject("bd",bsrv.readOneBoard(bno));
+        mv.addObject("rp",brsrv.readReply(bno));
         bsrv.viewCountBoard(bno); //조회수 증가
+
 
         mv.addObject("bd",bsrv.readOneBoard(bno));
         return mv;
@@ -135,6 +139,27 @@ public class BoardController {
             bsrv.removeBoard(bno);
 
         return "redirect:/board/list?cp=" + cp;
+    }
+
+    //
+    @GetMapping("/board/find") // 게시판 검색 기능  불러온 값이 많다면 마찬가지로 페이징 해야하기때문에 cp 도 가져와야함
+    // 게시물 검색기능을 위한 url 호출방법 : /board/find?findtype=title&findkey=기생충&cp=1
+    public ModelAndView find(ModelAndView mv, String findtype, String findkey,String cp) {
+
+        mv.setViewName("board/list.tiles");
+
+        mv.addObject("bds",bsrv.readBoard(cp,findtype,findkey)); // 매개변수 3개짜리의 readBoard 메서드 새로 생성 아래 카운터보드도 마찬가지
+        mv.addObject("bdcnt",bsrv.countBoard(findtype,findkey));
+
+        return mv;
+    }
+
+    @PostMapping("board/replyok") // 댓글쓰기
+    public String replyok(ReplyVO rvo) {
+        String returnPage = "redirect:/board/view?bno=" +rvo.getBno();
+
+        brsrv.newReply(rvo);
+        return returnPage;
     }
 }
 

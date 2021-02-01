@@ -68,44 +68,53 @@
 
             <div class="row margin1050">
                 <h3><i class="bi bi-chat-square-dots-fill"></i>나도 한마디</h3>
+
                 <table class="table tblines tbwide">
-                    <tr><td><h4>imlsw96</h4></td>
+                    <c:forEach var="r" items="${rp}">
+
+                        <c:if test="${r.rno eq r.cno}"><!-- 댓글 -->
+                    <tr><td><h4>${r.userid}</h4></td>
                             <td>
                                 <ul class="list-unstyled">
                                     <li><div class="cmtbg1 row">
-                                        <span class="col-12 text-right">2021.01.14 16:16:16</span></div>
-                                        <p>졸리다 졸려 ㅆㅃ </p>
+                                        <span class="col-12 text-right">${r.regdate}</span></div>
+                                        <p>${r.reply} </p>
                                     </li>
-                                </ul><!-- 댓글 -->
-                                    <ul class="list-unstyled">
-                                        <li><div class="cmtbg2 row">
-                                            <span class="h6 col-3">imlsw96</span><span class="col-9 text-right">2021.01.14 16:16:16</span></div>
-                                                <p>졸리다고요~? 그러니까 할일을 제때 빠릿빠릿하게 했어야죠~</p>
-                                        </li>
-                                    </ul><!-- 대댓글 -->
+                                </ul>
                             </td>
                     </tr>
+                        </c:if>
 
-                    <tr>
-                        <td><h4>imlsw96</h4></td>
-                        <td>
-                            <ul class="list-unstyled">
-                                <li><div class="cmtbg1 row">
-                                    <span class="col-12 text-right">2021.01.14 16:16:16</span></div>
-                                    <p>졸리다 졸려 ㅆㅃ </p>
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
+                        <c:if test="${r.rno ne r.cno}"><!-- 대댓글 -->
+                            <tr><td><h4></h4></td>
+                                <td>
+                                    <ul class="list-unstyled">
+                                        <li><div class="cmtbg2 row">
+                                            <span class="h6 col-3">${r.userid}</span><span class="col-9 text-right">${r.regdate}</span></div>
+                                            <p>${r.reply}</p>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </c:if>
+
+
+
+                    </c:forEach>
+
+
                 </table>
             </div><!--댓글목록 -->
+
             <div class="row margin1050">
                 <form id="replyfrm" class="card card-body bg-light">
                     <div class="form-group row justify-content-center">
                         <label class="text-warning font-weight-bold pushtop50">로그인 하세요</label>&nbsp;
-                        <textarea id="comment" rows="5" class="form-control col-8"></textarea>&nbsp;
-                       <span><button id="bdcmtbtn" class="btn btn-dark pushtop50 "><i class="bi bi-chat-text-fill bidragup "></i>댓글쓰기</button></span>
+                        <textarea id="reply" name="reply" rows="5" class="form-control col-8"></textarea>&nbsp;
+                       <span><button type="button" id="bdcmtbtn" class="btn btn-dark pushtop50 "><i class="bi bi-chat-text-fill bidragup "></i>댓글쓰기</button></span>
                     </div>
+                    <input type="hidden" name="bno" value="${param.bno}">
+                    <input type="hidden" name="userid" id="uid" value="${UID}">
                 </form>
             </div><!--댓글폼 -->
     </div><!-- main -->
