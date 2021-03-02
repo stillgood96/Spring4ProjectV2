@@ -1,0 +1,41 @@
+AWS에 생성해둔 centos 서버에
+스프링MVC 프로젝트 배포하고 확인하기
+
+1. MVC 프로젝트를 WAR로 패키징하기
+(확인사항) ctrl + alt + shift + s
+=> 아트팩트 : 프로젝트명:war
+Build => builds Artifacts => 프로젝트명 :war
+=> action은 Build 선택
+
+2. AWS 톰캣서버의 webapp에 업로드하기
+1번과정에서 생성된 결과물인 war파일을
+winscp를 이용해서 tomcat/wabapp에  업로드함
+=> 톰캣서버가 자동으로 war파일을을 배포함.
+=> winscp로 업로드하면 새로고침후 프로젝트명의 폴더가 생긴것을 확인할 수 있다.
+
+3. 브라우져로 확인.
+http://aws서버주소:8080/프로젝트명명
+
+또는 1-1 스프링mvc 프로젝트를 그대로 웹서버로 올리기
+Build => builds Artifacts => 프로젝트명 : war exploded => action 메뉴에서 Build 선택
+프로젝트 창의 target 디렉토리 아래에 프로젝트명과 동일한 이름의 폴더내 모든 파일/폴더를 톰캣서버의 webapps/ROOT 아래로 업로드하면 된다
+*war파일만을 업로드하면 내부의 주소지정해놓은게 깨져서 css가 적용이 되지 않는다거나 그런문제가 발생할 수 있다.
+
+cd webapps
+
+ls
+rm -rf Spinrg*
+
+ls
+
+cp ROOT ROOT2
+
+
+RDS -> 보안그룹 -> 인바운드 규칙
+1) EC2의 아이피를 추가
+또는
+2) 3306의 인바운드 규칙을 위치무관으로 설정
+
+mariadb를 사용하는 경우 비밀번호부분의 인코딩 문제가있다.
+그래서 불가피하게 jdbc.properties에 작성한 비밀번호 부분을
+root-context.xml에 고대로 작성해주자 .

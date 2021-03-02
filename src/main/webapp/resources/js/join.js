@@ -191,6 +191,7 @@ function checkuid(){
             }
             $('#uidmsg').text(msg);
         } ) // 비동기 요청 성공시
+
         .fail(function(xhr, status, error){
             alert(xhr.status, + "/" + error);
         }); // 비동기 요청 실패시

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pds">
+    <insert id="insertPds" statementType="PREPARED" parameterType="imlsw96.spring.mvc.vo.PdsVO">
+        insert into Pds ( title, userid, contents, fname1, fname2, fname3, fsize1, fsize2, fsize3, ftype1, ftype2, ftype3,uuid)
+        values(#{title}, #{userid}, #{contents}, #{fname1}, #{fname2}, #{fname3}, #{fsize1}, #{fsize2}, #{fsize3}, #{ftype1}, #{ftype2}, #{ftype3},#{uuid})
+    </insert>
+
+    <select id="selectList" statementType="PREPARED" resultType="imlsw96.spring.mvc.vo.PdsVO" parameterType="int">
+        select pno, title, userid, regdate,thumbs,views from Pds order by pno desc limit #{startnum}, 10
+    </select>
+
+    <select id="countPds" statementType="PREPARED" resultType="int">
+        select count(pno) cnt from Pds
+    </select>
+
+    <select id="selectOne" statementType="PREPARED" resultType="imlsw96.spring.mvc.vo.PdsVO"
+            parameterType="String">
+        select * from Pds where pno =#{pno};
+    </select>
+
+    <update id="viewCount" statementType="PREPARED" parameterType="String">
+        update Pds set views= views+1 where pno = #{pno};
+    </update>
+
+    <select id="selectOneFname" statementType="PREPARED" parameterType="Map" resultType="imlsw96.spring.mvc.vo.PdsVO">
+        select ${order} fname1, uuid from Pds where pno=#{pno};
+    </select>
+
+    <update id="downCount" statementType="PREPARED" parameterType="int">
+        update Pds set ${order} = ${order} + 1 where pno = #{pno}
+    </update>
+</mapper>

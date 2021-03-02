@@ -1,8 +1,9 @@
 
 <%@ page pageEncoding="utf-8" %>
-
-<footer class="row margin30">
-    <div class="col text-right fatdiv bg-light">
-        <h6>Copyright &copy; Lorem Ipsum 2021.
-            All Rights Reserved. Created By Bootstrap4</h6></div>
+<div class="row">
+<footer class="col-12">
+    <div class="text-right">
+        <h6 class="text-light bg-dark fatdiv">ⓒ Brooklyn Nets 2021 Powered by imlsw96. All Rights Reserved.</h6>
+    </div>
 </footer>
+</div>

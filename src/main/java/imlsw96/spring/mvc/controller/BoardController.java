@@ -158,7 +158,9 @@ public class BoardController {
     public String replyok(ReplyVO rvo) {
         String returnPage = "redirect:/board/view?bno=" +rvo.getBno();
 
-        brsrv.newReply(rvo);
+        if (rvo.getCno()==null) brsrv.newReply(rvo);
+        else brsrv.newReReply(rvo);
+
         return returnPage;
     }
 }

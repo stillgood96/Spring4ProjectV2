@@ -127,7 +127,7 @@ public class JoinController {
     // 사용 불가능 아이디 (다른 사람이 사용중) : 1
     @ResponseBody
     @GetMapping("/join/checkuid")
-    public void checkuid (String uid, HttpServletResponse res) {  //동을 받아와야하기 때문에
+    public void checkuid (String uid, HttpServletResponse res) {
         try {
             // 응답결과를 브라우져로 보냄
             res.getWriter().print(msrv.checkUserid(uid));

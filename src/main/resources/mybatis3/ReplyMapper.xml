@@ -3,9 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="reply">
+    <insert id="insertReply2" statementType="PREPARED" parameterType="imlsw96.spring.mvc.vo.ReplyVO">
+        insert into Reply(cno,bno,userid,reply) values(#{cno},#{bno},#{userid},#{reply});
+    </insert>
+
     <insert id="insertReply" statementType="PREPARED" parameterType="imlsw96.spring.mvc.vo.ReplyVO">
         insert into Reply(cno,bno,userid,reply) values(#{cno},#{bno},#{userid},#{reply});
     </insert>
+
     <select id="selectList" statementType="PREPARED" parameterType="int" resultType="imlsw96.spring.mvc.vo.ReplyVO">
         select * from Reply where bno = #{bno}
         order by cno;

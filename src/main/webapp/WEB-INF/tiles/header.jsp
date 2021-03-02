@@ -1,17 +1,17 @@
 <%@ page pageEncoding="utf-8" %>
 <%@ taglib uri ="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <header class="row">
-        <div class="col-6">
-            <h1>Lorem Inpsum</h1>
+    <div class="col-5 bg-light">
+            <h2 class=" font-weight-bold"><img src="/img/BrooklynNets/이미지%202021-01-13-41.png" style="width: 50px; height: 50px;">Brooklyn Nets </h2>
         </div>
-        <div class="col-6 text-right">
+        <div class="col-7 text-right bg-light">
             <%--세션변수 UID에 값이 존재하지 않는다면 ( 즉, 로그인하지 않았다면) --%>
             <c:if test="${empty UID}">
-                    <h1>
+                    <h2>
                     <button type="button" class="btn btn-danger"
                             data-toggle="modal" data-target="#loginmodal">로그인</button>
                     <button type="button" class="btn btn-primary" id="join2btn">회원가입</button>
-                </h1>
+                </h2>
             </c:if>
                 <%--세션변수 UID에 값이 존재한다면 ( 즉, 로그인 했다면) --%>
             <c:if test="${not empty UID}">
@@ -22,7 +22,7 @@
         </div>
     </header>
 
-    <nav class="nav navbar-expand navbar-dark bg-dark">
+    <nav class="nav navbar-expand navbar-dark bg-dark row">
         <ul class="navbar-nav nav-fill w-100">
             <li class="nav-item"><a class="nav-link" href="/intro">프로젝트 소개</a></li>
 

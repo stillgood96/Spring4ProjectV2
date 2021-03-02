@@ -13,11 +13,13 @@
 <%--application : WAS(프로젝트) 내에서 공유할 수 있는 객체 전역서버같은 느낌 톰캣 서버 끌때까지 !--%>
 
 <c:set var="newChar" value="
-" scope="request"/>
+" scope="application"/>
+<%--<c:set var="baseImgURL" value="http://localhost/cdn/" />--%>
+<c:set var="baseImgURL" value="http://ec2-54-180-30-68.ap-northeast-2.compute.amazonaws.com:1512/cdn/" />
 
-    <div id="main">
+<div id="main">
         <div class="margin30">
-            <h3><i class="bi bi-chat-dots-fill bidragup"></i>자유 게시판</h3>
+            <h3><i class="bi bi-card-image bidragup"></i>갤러리</h3>
             <hr>
         </div>
 
@@ -32,16 +34,32 @@
                 <div class="col-6 text-right mb-2">
 
                     <c:if test="${not empty UID}">
-                    <button id="newbd" type="button" class="btn btn-light id=listbdbtn"><i class="bi bi-card-list bidragup">새글쓰기</i></button></c:if>
+                    <button id="newgal" type="button" class="btn btn-light" id="listbdbtn"><i class="bi bi-card-list bidragup">새글쓰기</i></button></c:if>
                 </div>
             </div><!--버튼들 -->
+
             <div class="row margin1050">
                 <table class="table">
-                    <tr class="tblines2 tbbg1 "><th colspan="2" class="text-center "><h2>${bd.title}</h2></th></tr> <!-- 제목 -->
-                    <tr class="tbbg2 font-weight-bold"><td>${bd.userid}</td><td class="text-right">${bd.regdate} / ${bd.thumbs} / ${bd.views}</td></tr> <!-- 작성자, 작성일, 조회수 -->
+                    <tr class="tblines2 tbbg1 "><th colspan="2" class="text-center "><h2>${gal.title}</h2></th></tr> <!-- 제목 -->
+                    <tr class="tbbg2 font-weight-bold"><td>${gal.userid}</td><td class="text-right">${gal.regdate} / ${gal.thumbs} / ${gal.views}</td></tr> <!-- 작성자, 작성일, 조회수 -->
                     <tr><td colspan="2" class="tbbg3 tblines2">
-                        ${fn:replace(bd.contents, newChar, "<br>")} <!--이런식으로 데이터 저장할때 <br>태그를 넣는것이 좋다. 서버에서 처리하면 더 느려진다.-->
-                    </td>
+                        <c:forEach begin="0" end="2" step="1" var="i">
+                            <c:if test="${fn:split(gal.fnames,'[/]')[i] ne '-'}">
+                                <img src="${baseImgURL}${fn:split(gal.fnames,'[/]')[i]}" width="75%" height="">
+                            </c:if>
+                        </c:forEach>
+
+
+                       <p> ${fn:replace(gal.contents, newChar, "<br>")} </p><!--이런식으로 데이터 저장할때 <br>태그를 넣는것이 좋다. 서버에서 처리하면 더 느려진다.-->
+                    </td></tr><!--본문 -->
+
+
+                    <!-- 첨부1은 무조건나오니까 IF문 필요X -->
+                    <c:forEach begin="0" end="2" step="1" var="i">
+                    <c:if test="${fn:split(gal.fnames,'[/]')[i] ne '-'}">
+                    <tr><td class="text-left">첨부${i+1}</td><td>(${fn:split(gal.fnames,"[/]")[i]} ${fn:split(gal.fsizes,"[/]")[i]}KB)</td></tr>
+                    </c:if>
+                    </c:forEach>
                 </table>
             </div><!--본문글 -->
 
@@ -58,13 +76,13 @@
                             <c:if test="${not empty UID}">
                         <button type="button" id="thumbbtn" class="btn btn-dark"><i class="bi bi-hand-thumbs-up bidragup"> </i>추천하기</button>
                             </c:if>
-                        <button type="button" id="listbdbtn" class="btn btn-light id=listbdbtn"><i class="bi bi-card-list bidragup">목록으로</i></button>
+                        <button type="button" id="listbdbtn" class="btn btn-light" id="listbdbtn"><i class="bi bi-card-list bidragup">목록으로</i></button>
                     </div>
                     </div><!--버튼들 -->
 
-            <input type="hidden" id="bno" value="${param.bno}">
+            <input type="hidden" id="pno" value="${param.pno}">
             <input type="hidden" id="cp" value="${param.cp}">
-            <input type="hidden" id="userid" value="${bd.userid}">
+            <input type="hidden" id="userid" value="${pd.userid}">
 
             <div class="row margin1050">
                 <h3><i class="bi bi-chat-square-dots-fill"></i>나도 한마디</h3>
@@ -120,7 +138,7 @@
                             <textarea id="reply" name="reply" rows="5" class="form-control col-8"></textarea>&nbsp;
                            <span><button type="button" id="bdcmtbtn" class="btn btn-dark pushtop50 "><i class="bi bi-chat-text-fill bidragup "></i>댓글쓰기</button></span>
                         </div>
-                        <input type="hidden" name="bno" value="${param.bno}">
+                        <input type="hidden" name="pno" value="${param.pno}">
                         <input type="hidden" name="userid" id="uid" value="${UID}">
                     </form>
                 </div><!--댓글폼 -->
@@ -136,7 +154,7 @@
                 <form name="rpfrm" id="rpfrm" class="well form-inline">
                     <textarea name="reply" id="rereply" rows="8" cols="75" class="span4"></textarea>
                     <input type="hidden" name="userid" value="${UID}">
-                    <input type="hidden" name="bno" value="${param.bno}">
+                    <input type="hidden" name="bno" value="${param.pno}">
                     <input type="hidden" name="cno" id="cno">
                 </form>
             </div>

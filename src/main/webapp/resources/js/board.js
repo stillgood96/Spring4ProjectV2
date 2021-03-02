@@ -54,6 +54,20 @@ $('#bdcmtbtn').on('click',function(){
   }
 });
 
+function addReply(cno) {
+    $('#replyModal').modal('show');
+    $('#cno').val(cno); // 대댓글 작성시 부모댓글 번호를 cno에 저장.
+}// 대댓글 대화상자 띄우기
+
+$('#rpbtn').on('click', function() {
+    if ($('#rereply').val() =='') alert('대댓글을 작성하세요');
+    else {
+        $('#rpfrm').attr("method","post");
+        $('#rpfrm').attr("action","/board/replyok"); // 기존 만들어놨떤 replyok를 활용해보자.
+        $('#rpfrm').submit();
+    }
+});// 대댓글 작성하기.
+
 // 새글 쓰기 write
 $('#newbdbtn').on('click',function() {
     if ($('#title').val()=='') alert('제목 작성하세요!');
